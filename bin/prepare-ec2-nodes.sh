@@ -63,7 +63,7 @@ wait
 
 for file in $tmpdir/*
 do
-  echo $file
+  echo ${file##*/}
   run cat $file
 done
 
@@ -78,11 +78,11 @@ add_device() {
   dev=$1
   mp=$2
   run mkdir -p $mp
-  if ! grep -Eq "^$dev" /etc/fstab
+  if [[ -n "$DEBUG" ]] || ! grep -Eq "^$dev" /etc/fstab
   then
     run sed -i '$ a'$dev' '$mp' ext4 defaults,noatime 0 0' /etc/fstab
   fi
-  if [[ -z "$(awk '{print $2}' /proc/mounts | grep $mp)" ]]
+  if [[ -n "$DEBUG" ]] || [[ -z "$(awk '{print $2}' /proc/mounts | grep $mp)" ]]
   then
     run mount $mp
   fi
