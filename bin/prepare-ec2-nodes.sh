@@ -60,7 +60,7 @@ done
 run mv /var/log /var/log-old-$(date +%s)
 
 # Backup fstab
-run cp /etc/fstab /etc/fstab.$(date +%s)
+run cp /etc/fstab /etc/fstab-$(date +%s)
 
 # Add entries to /etc/fstab
 add_device() {
