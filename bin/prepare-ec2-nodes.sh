@@ -73,16 +73,16 @@ add_device() {
   then
     run sed -i '$ a'$dev' '$mp' ext4 defaults,noatime 0 0' /etc/fstab
   fi
+  if [[ -z "$(awk '{print $2}' /proc/mounts | grep $mp)" ]]
+  then
+    run mount $mp
+  fi
 }
 add_device /dev/xvdf /var/log
 add_device /dev/xvdg /opt/cloudera
 count=0
 for dev in $data_devices
 do
-  if ! grep -Eq "^/dev/$dev" /etc/fstab
-  then
-    add_device "/dev/$dev" "/data$count"
-  fi
-  run mount /data$count
+  add_device "/dev/$dev" "/data$count"
   ((count++))
 done
