@@ -63,7 +63,7 @@ wait
 
 for file in $tmpdir/*
 do
-  echo "mkfs output --- " ${file##*/}
+  echo "***** mkfs output " ${file##*/} "*******"
   cat $file
 done
 
