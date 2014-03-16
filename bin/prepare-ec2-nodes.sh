@@ -1,8 +1,6 @@
 #!/bin/bash
 EC2_DEIVCE_URL="http://169.254.169.254/latest/meta-data/block-device-mapping/"
 DEBUG="$@"
-[[ -z "$DEBUG" ]]
-exit $?
 run() {
   if [[ -z "$DEBUG" ]]
   then
@@ -74,4 +72,5 @@ count=0
 for dev in $data_devices
 do
   run sed -i '$ a/dev/'$dev' /data'$count' ext4 defaults,noatime 0 0' /etc/fstab
+  run mount /data$count
 done
