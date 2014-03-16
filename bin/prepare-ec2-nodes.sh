@@ -49,7 +49,7 @@ run chkconfig ntpd on
 
 # Format all storage volumes except the root volume
 tmpdir=/tmp/mkfs-$(date +%s)
-run mkdir -p $tmpdir
+mkdir -p $tmpdir
 run mkfs -t ext4 /dev/xvdf 1>$tmpdir/xvdf.out 2>$tmpdir/xvdf.err </dev/null &
 run mkfs -t ext4 /dev/xvdg 1>$tmpdir/xvdg.out 2>$tmpdir/xvdg.err </dev/null &
 data_devices=$(lsblk | egrep '^xvd[a-z]+ ' | awk '!$7 {print $1}' | egrep -v 'xvdf|xvdg')
