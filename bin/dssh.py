@@ -24,6 +24,7 @@ class RemoteCommand(threading.Thread):
   def run(self):
     args = [ "ssh" ] + self.options + [ self.host ] +  self.cmd
     p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
+    # Should be able to replace PipeReader with p.communicate()
     stdoutReader = PipeReader(p.stdout)
     stdoutReader.start()
 
