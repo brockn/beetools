@@ -6,7 +6,7 @@ run() {
   then
     sudo "$@"
   else
-    echo run "$@"
+    echo sudo "$@"
   fi
 }
 # ensure sudo works
