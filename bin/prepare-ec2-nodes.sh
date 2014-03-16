@@ -53,7 +53,7 @@ run mkfs -t ext4 /dev/xvdg
 data_devices=$(lsblk | egrep '^xvd[a-z]+ ' | awk '!$7 {print $1}' | egrep -v 'xvdf|xvdg')
 for dev in $data_devices
 do
-  run mkfs -t ext4 -m 1 -T largefile -O dir_index,extent,sparse_super $dev
+  run mkfs -t ext4 -m 1 -T largefile -O dir_index,extent,sparse_super /dev/$dev
 done
 
 # Rename existing /var/log dir
