@@ -71,7 +71,10 @@ run sed -i '$ a/dev/xvdg /opt/cloudera ext4 defaults 0 0' /etc/fstab
 count=0
 for dev in $data_devices
 do
-  run sed -i '$ a/dev/'$dev' /data'$count' ext4 defaults,noatime 0 0' /etc/fstab
+  if ! grep -Eq "^/dev/$dev" /etc/fstab
+  then
+    run sed -i '$ a/dev/'$dev' /data'$count' ext4 defaults,noatime 0 0' /etc/fstab
+  fi
   run mount /data$count
   ((count++))
 done
