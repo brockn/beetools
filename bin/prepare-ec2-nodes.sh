@@ -64,7 +64,7 @@ wait
 for file in $tmpdir/*
 do
   echo ${file##*/}
-  run cat $file
+  cat $file
 done
 
 # Rename existing /var/log dir
