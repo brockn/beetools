@@ -73,4 +73,5 @@ for dev in $data_devices
 do
   run sed -i '$ a/dev/'$dev' /data'$count' ext4 defaults,noatime 0 0' /etc/fstab
   run mount /data$count
+  ((count++))
 done
