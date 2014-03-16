@@ -66,14 +66,22 @@ run mkdir /var/log /opt/cloudera /data0 /data1 /data2 /data3
 run cp /etc/fstab /etc/fstab.bak
 
 # Add entries to /etc/fstab
-run sed -i '$ a/dev/xvdf /var/log ext4 defaults 0 0' /etc/fstab
-run sed -i '$ a/dev/xvdg /opt/cloudera ext4 defaults 0 0' /etc/fstab
+add_device() {
+  dev=$1
+  mp=$2
+  if ! grep -Eq "^$dev" /etc/fstab
+  then
+    run sed -i '$ a'$dev' '$mp' ext4 defaults,noatime 0 0' /etc/fstab
+  fi
+}
+add_device /dev/xvdf /var/log
+add_device /dev/xvdg /opt/cloudera
 count=0
 for dev in $data_devices
 do
   if ! grep -Eq "^/dev/$dev" /etc/fstab
   then
-    run sed -i '$ a/dev/'$dev' /data'$count' ext4 defaults,noatime 0 0' /etc/fstab
+    add_device "/dev/$dev" "/data$count"
   fi
   run mount /data$count
   ((count++))
