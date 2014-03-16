@@ -1,7 +1,6 @@
 #!/usr/bin/python -W ignore
 import sys, os, threading, subprocess
 from time import sleep
-from Queue import Queue
 program = "dssh"
 class PipeReader(threading.Thread):
   def __init__(self, pipe):
