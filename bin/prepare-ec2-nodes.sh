@@ -57,18 +57,16 @@ do
 done
 
 # Rename existing /var/log dir
-run mv /var/log /var/log-old
-
-# Create new directories
-run mkdir /var/log /opt/cloudera /data0 /data1 /data2 /data3
+run mv /var/log /var/log-old-$(date +%s)
 
 # Backup fstab
-run cp /etc/fstab /etc/fstab.bak
+run cp /etc/fstab /etc/fstab.$(date +%s)
 
 # Add entries to /etc/fstab
 add_device() {
   dev=$1
   mp=$2
+  run mkdir -p $mp
   if ! grep -Eq "^$dev" /etc/fstab
   then
     run sed -i '$ a'$dev' '$mp' ext4 defaults,noatime 0 0' /etc/fstab
