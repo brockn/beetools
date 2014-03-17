@@ -25,7 +25,7 @@ then
   exit 1
 fi
 
-if false && [[ $numEbs -ne 2 ]]
+if [[ $numEbs -ne 2 ]]
 then
   echo "This script expects 2 EBS drives for /var/log and/opt/cloudera" 1>&2
   exit 1
