@@ -56,7 +56,6 @@ mkdir -p $tmpdir
 run mkfs -t ext4 /dev/xvdf 1>$tmpdir/xvdf.out 2>$tmpdir/xvdf.err </dev/null &
 run mkfs -t ext4 /dev/xvdg 1>$tmpdir/xvdg.out 2>$tmpdir/xvdg.err </dev/null &
 data_devices=$(lsblk | egrep '^xvd[a-z]+ ' | awk '!$7 {print $1}' | egrep -v 'xvdf|xvdg')
-rm -rf /tmp/mkfs-
 for dev in $data_devices
 do
   run mkfs -t ext4 -m 1 -T largefile -O dir_index,extent,sparse_super /dev/$dev  1>$tmpdir/$dev.out 2>$tmpdir/$dev.err </dev/null &
