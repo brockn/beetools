@@ -41,6 +41,9 @@ run chkconfig ip6tables off
 run chkconfig cups off
 run chkconfig postfix off
 
+# tune
+run sysctl vm.swappiness=0
+
 # Set clock and turn on ntpd
 run service ntpd stop
 run ntpdate pool.ntp.org
