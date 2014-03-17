@@ -98,3 +98,4 @@ do
   add_device "/dev/$dev" "/data$count"
   ((count++))
 done
+exit 0
