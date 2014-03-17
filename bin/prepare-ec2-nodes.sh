@@ -42,7 +42,7 @@ run chkconfig cups off
 run chkconfig postfix off
 
 # tune
-run sysctl vm.swappiness=0
+run sh -c 'echo -e "\nvm.swappiness=0" >> /etc/sysctl.conf'
 
 # Set clock and turn on ntpd
 run service ntpd stop
