@@ -1,5 +1,4 @@
 #!/bin/bash
-EC2_DEIVCE_URL="http://169.254.169.254/latest/meta-data/block-device-mapping/"
 DEBUG="$@"
 run() {
   if [[ -z "$DEBUG" ]]
@@ -16,21 +15,6 @@ then
   exit 1
 fi
 
-# Check drives
-numEbs=$(curl -s $EC2_DEIVCE_URL | egrep -c "^ebs")
-numEphemeral=$(curl -s $EC2_DEIVCE_URL | egrep -c "^ephemeral")
-if [[ $numEphemeral -ne 4 ]] && [[ $numEphemeral -ne 24 ]]
-then
-  echo "This script expects either 4 or 24 ephemeral drives" 1>&2
-  exit 1
-fi
-
-if [[ $numEbs -ne 2 ]]
-then
-  echo "This script expects 2 EBS drives for /var/log and/opt/cloudera" 1>&2
-  exit 1
-fi
-
 # Disable SELinux
 run setenforce 0
 run sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
@@ -42,7 +26,7 @@ run chkconfig cups off
 run chkconfig postfix off
 
 # tune
-run sh -c 'echo -e "\nvm.swappiness=0" >> /etc/sysctl.conf'
+run sh -c 'echo -e "\nvm.swappiness=1" >> /etc/sysctl.conf'
 
 # Set clock and turn on ntpd
 run service ntpd stop
